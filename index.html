@@ -5,7 +5,6 @@
     <title>HD FF STATS</title>
     <link rel="icon" type="image/png" href="icon.png">
     <style>
-        
         /* Login Page Styles */
         #loginPage {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -19,7 +18,7 @@
         }
 
         .login-container {
-            background: linear-gradient(135deg, #000000 0%, #e22f2f 100%) ;
+            background: linear-gradient(135deg, #000000 0%, #e22f2f 100%);
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 8px 24px rgba(255, 0, 0, 0.8);
@@ -48,7 +47,7 @@
             border-radius: 5px;
             background: #331818;
             color: #fff;
-            font-size: 20PX;
+            font-size: 20px;
             box-sizing: border-box;
         }
 
@@ -63,7 +62,7 @@
             margin-top: 20px;
             background: #7e7d54;
             color: rgb(255, 255, 255);
-            border:#e22f2f;
+            border: #e22f2f;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
@@ -204,6 +203,18 @@
             width: 60px;
         }
 
+        .date-value {
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 4px 12px;
+            margin: 0 5px;
+            color: #fff;
+            font-size: 18px;
+            min-width: 120px;
+            text-align: center;
+        }
+
         .input-add {
             background: #333;
             border: 1px solid #070707;
@@ -215,7 +226,19 @@
             display: none;
         }
 
-        .admin-only .input-add {
+        .date-input {
+            background: #333;
+            border: 1px solid #070707;
+            border-radius: 4px;
+            padding: 4px 6px;
+            margin: 0 5px;
+            color: #fff;
+            width: 140px;
+            display: none;
+        }
+
+        .admin-only .input-add,
+        .admin-only .date-input {
             display: inline-block;
         }
 
@@ -476,6 +499,15 @@
                     <input type="text" id="newPlayerUID" class="form-input" placeholder="Enter player UID">
                 </div>
                 <div class="form-row">
+                    <span class="form-label">Start Date:</span>
+                    <input type="date" id="newPlayerStartDate" class="form-input">
+                </div>
+                <div class="form-row">
+                    <span class="form-label">Initial Damage:</span>
+                    <input type="number" id="newPlayerDamage" class="form-input" placeholder="Enter initial damage"
+                        min="0">
+                </div>
+                <div class="form-row">
                     <span class="form-label">Profile Image:</span>
                     <div style="flex: 1; display: flex; align-items: center; gap: 15px;">
                         <input type="text" id="newPlayerImage" class="form-input"
@@ -521,19 +553,26 @@
         // If no data in localStorage, use default data
         if (playerData.length === 0) {
             playerData = [
-                { uid: "3540097104", name: "ARUL", image: "og.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "8236769962", name: "CHANDRU", image: "emon.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "2268215404", name: "ABISHEK", image: "abiii.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "2950823063", name: "MANOJ", image: "mk.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "2479975001", name: "IRFAN", image: "stark.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "678906421", name: "MATHIR", image: "bot.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "4333727668", name: "MATHESH", image: "maadhu.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "1551477601", name: "KOUSHIK", image: "jerry.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "1744801691", name: "NASAR", image: "nasar.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "3566386437", name: "DHARAGESH", image: "dhari.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 },
-                { uid: "7728150146", name: "GOVINTHRAJ", image: "govinth.png", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0 }
+                { uid: "3540097104", name: "ARUL", image: "og.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "8236769962", name: "CHANDRU", image: "emon.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "2268215404", name: "ABISHEK", image: "abiii.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "2950823063", name: "MANOJ", image: "mk.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "2479975001", name: "IRFAN", image: "stark.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "678906421", name: "MATHIR", image: "bot.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "4333727668", name: "MATHESH", image: "maadhu.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "1551477601", name: "KOUSHIK", image: "jerry.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "1744801691", name: "NASAR", image: "nasar.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "3566386437", name: "DHARAGESH", image: "dhari.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 },
+                { uid: "7728150146", name: "GOVINTHRAJ", image: "govinth.png", startDate: "2023-01-01", solo: 0, duo: 0, trio: 0, squad: 0, kills: 0, damage: 0 }
             ];
             savePlayerData();
+        }
+
+        // Format date to display
+        function formatDate(dateString) {
+            if (!dateString) return "Not set";
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
         // Save player data to localStorage
@@ -626,6 +665,9 @@
                     preview.innerHTML = '<span>Image Preview</span>';
                 }
             });
+
+            // Set default date to today
+            document.getElementById('newPlayerStartDate').valueAsDate = new Date();
         });
 
         // Logout function
@@ -655,6 +697,16 @@
                 const savedStats = JSON.parse(localStorage.getItem(`player_${player.uid}`) || '{}');
                 Object.assign(player, savedStats);
 
+                // Ensure startDate exists
+                if (!player.startDate) {
+                    player.startDate = "2023-01-01";
+                }
+
+                // Ensure damage exists
+                if (player.damage === undefined) {
+                    player.damage = 0;
+                }
+
                 // Create player box
                 const box = document.createElement('div');
                 box.className = `box ${isAdmin ? 'admin-only' : ''}`;
@@ -665,8 +717,12 @@
                     <div class="stats-section" data-uid="${player.uid}">
                         <div class="stat-row"><span class="stat-label">UID:</span> <span class="stat-value">${player.uid}</span></div>
                         <div class="stat-row"><span class="stat-label">NAME:</span> <span class="stat-value">${player.name}</span></div>
+                        <div class="stat-row"><span class="stat-label">START DATE:</span> <span class="date-value" data-stat="startDate">${formatDate(player.startDate)}</span>
+                            <input type="date" class="date-input" value="${player.startDate}" data-stat="startDate">
+                            <button class="edit-btn" onclick="updateDate(this)">Update Date</button>
+                        </div>
                         <div class="stat-row"><span class="stat-label">SOLO MATCHES:</span> <span class="stat-value" data-stat="solo">${player.solo}</span>
-                            <input type="number" class="input-add" min="0" value="0" data-stat="solo"> <button class="edit-btn" onclick="addStat(this)">+</button> <button class="edit-btn update-btn" onclick="updateAll(this)">Update</button>
+                            <input type="number" class="input-add" min="0" value="0" data-stat="solo"> <button class="edit-btn" onclick="addStat(this)">+</button> <button class="edit-btn update-btn" onclick="updateAll(this)">Update All</button>
                         </div>
                         <div class="stat-row"><span class="stat-label">DUO MATCHES:</span> <span class="stat-value" data-stat="duo">${player.duo}</span>
                             <input type="number" class="input-add" min="0" value="0" data-stat="duo"> <button class="edit-btn" onclick="addStat(this)">+</button>
@@ -679,6 +735,9 @@
                         </div>
                         <div class="stat-row"><span class="stat-label">TOTAL KILLS:</span> <span class="stat-value" data-stat="kills">${player.kills}</span>
                             <input type="number" class="input-add" min="0" value="0" data-stat="kills"> <button class="edit-btn" onclick="addStat(this)">+</button>
+                        </div>
+                        <div class="stat-row"><span class="stat-label">TOTAL DAMAGE:</span> <span class="stat-value" data-stat="damage">${player.damage}</span>
+                            <input type="number" class="input-add" min="0" value="0" data-stat="damage"> <button class="edit-btn" onclick="addStat(this)">+</button>
                         </div>
                         ${isAdmin ? `<div class="stat-row" style="margin-top: 15px;">
                             <button class="edit-btn" style="background: #f44336;" onclick="removePlayer('${player.uid}')">Remove Player</button>
@@ -721,6 +780,28 @@
             btn.previousElementSibling.value = 0;
         }
 
+        // Function to update start date (admin only)
+        function updateDate(btn) {
+            if (!isAdmin) return;
+
+            const dateInput = btn.previousElementSibling;
+            const dateSpan = dateInput.previousElementSibling;
+            const newDate = dateInput.value;
+            const uid = btn.closest('.stats-section').dataset.uid;
+
+            // Update display
+            dateSpan.textContent = formatDate(newDate);
+
+            // Save to player data and localStorage
+            const player = playerData.find(p => p.uid === uid);
+            if (player) {
+                player.startDate = newDate;
+                localStorage.setItem(`player_${uid}`, JSON.stringify(player));
+            }
+
+            alert("Start date updated successfully!");
+        }
+
         // Update all stats in a section (admin only)
         function updateAll(btn) {
             if (!isAdmin) return;
@@ -758,19 +839,20 @@
         function resetAllData() {
             if (!isAdmin) return;
 
-            if (confirm("Are you sure you want to reset ALL player data to zero? This cannot be undone.")) {
+            if (confirm("Are you sure you want to reset ALL player stats to zero? This will NOT reset start dates or damage.")) {
                 playerData.forEach(player => {
                     player.solo = 0;
                     player.duo = 0;
                     player.trio = 0;
                     player.squad = 0;
                     player.kills = 0;
+                    // Note: Damage and start date are NOT reset
 
                     localStorage.setItem(`player_${player.uid}`, JSON.stringify(player));
                 });
 
                 loadStatsPage();
-                alert("All player data has been reset to zero.");
+                alert("All player stats (except start dates and damage) have been reset to zero.");
             }
         }
 
@@ -784,6 +866,8 @@
             // Clear form fields
             document.getElementById('newPlayerName').value = '';
             document.getElementById('newPlayerUID').value = '';
+            document.getElementById('newPlayerStartDate').valueAsDate = new Date();
+            document.getElementById('newPlayerDamage').value = '0';
             document.getElementById('newPlayerImage').value = '';
             document.getElementById('imagePreview').innerHTML = '<span>Image Preview</span>';
         }
@@ -802,6 +886,8 @@
 
             const name = document.getElementById('newPlayerName').value.trim();
             const uid = document.getElementById('newPlayerUID').value.trim();
+            const startDate = document.getElementById('newPlayerStartDate').value;
+            const damage = parseInt(document.getElementById('newPlayerDamage').value) || 0;
             const image = document.getElementById('newPlayerImage').value.trim();
 
             // Validation
@@ -812,6 +898,11 @@
 
             if (!uid) {
                 alert("Please enter player UID");
+                return;
+            }
+
+            if (!startDate) {
+                alert("Please select a start date");
                 return;
             }
 
@@ -829,11 +920,13 @@
                 uid: uid,
                 name: name,
                 image: playerImage,
+                startDate: startDate,
                 solo: 0,
                 duo: 0,
                 trio: 0,
                 squad: 0,
-                kills: 0
+                kills: 0,
+                damage: damage
             };
 
             // Add to player data array
